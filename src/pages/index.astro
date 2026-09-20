@@ -1,0 +1,377 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+import Testimonials from '../components/Testimonials.astro';
+import site from '../content/site.json';
+import services from '../content/services.json';
+import gallery from '../content/gallery.json';
+import { resolveGallery } from '../lib/photos';
+import hero from '../assets/photos/bridal-makeup-application.jpg';
+
+const photos = resolveGallery(gallery.items).slice(0, 6);
+
+const offerings = [
+  {
+    title: 'Bridal makeup',
+    copy: 'A soft, luminous look built to last a fourteen-hour day and photograph the way you actually look, not the way a flash decides you do.',
+    from: services.groups[0].items[0].price,
+  },
+  {
+    title: 'Bridal hair',
+    copy: 'Romantic styling, from a loose undone wave to a structured updo that survives the dance floor. Hair and makeup by one artist, on one timeline.',
+    from: services.groups[1].items[0].price,
+  },
+  {
+    title: 'Your bridal party',
+    copy: 'Mothers, sisters, bridesmaids and juniors, all finished before the photographer arrives. Krista builds the morning schedule so nobody is rushed.',
+    from: services.groups[0].items[3].price,
+  },
+];
+
+const steps = [
+  {
+    n: '01',
+    title: 'Send your inquiry',
+    copy: `Tell Krista your date, where you are getting ready and roughly who needs what. She replies within ${site.responseTime}.`,
+  },
+  {
+    n: '02',
+    title: 'Hold your date',
+    copy: `You get a contract and a quote. Sign it with a ${site.depositPercent}% deposit and the date is yours. It is held for one week while you decide.`,
+  },
+  {
+    n: '03',
+    title: 'Have your trial',
+    copy: 'Optional, and worth it. You settle the look together with time to change your mind, so the wedding morning holds no surprises.',
+  },
+  {
+    n: '04',
+    title: 'Wedding day',
+    copy: `The balance is due ${site.balanceDueDays} days before. Krista arrives at your venue with everything, on the timeline in your contract.`,
+  },
+];
+---
+
+<Base
+  title={`${site.businessName} — Bridal Hair & Makeup in Edmonton`}
+  bareTitle
+  description={`Bridal hair and makeup artistry by ${site.artist}. On-location across Edmonton and central Alberta, with over ${site.yearsExperience} years of wedding mornings behind her.`}
+>
+  <!-- ─── Hero ─── -->
+  <section class="hero">
+    <Curve from="top-right" size={1.1} />
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Edmonton, Alberta</p>
+        <h1>Elegant. Romantic.<br />Beautiful.</h1>
+        <p class="lede">
+          Bridal hair and makeup artistry by {site.artist} — on location,
+          unhurried, and built around the day you have actually planned.
+        </p>
+        <div class="hero-actions">
+          <a href="/book/" class="btn">Check your date</a>
+          <a href="/gallery/" class="textlink">See her work</a>
+        </div>
+      </div>
+
+      <div class="hero-photo">
+        <Image
+          src={hero}
+          alt="Krista applying lip colour to a bride on her wedding morning"
+          widths={[400, 700, 1000]}
+          sizes="(max-width: 900px) 92vw, 460px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── What she does ─── -->
+  <section class="band">
+    <div class="shell">
+      <div class="center">
+        <p class="eyebrow">What Krista does</p>
+        <h2>Two chairs, one artist,<br />no scramble at 7am.</h2>
+        <hr class="rule rule--center" />
+      </div>
+
+      <ul class="offerings">
+        {
+          offerings.map((o) => (
+            <li class="offering">
+              <h3>{o.title}</h3>
+              <p>{o.copy}</p>
+              <p class="from">
+                From <strong>{o.from}</strong>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="center"><a href="/services/" class="textlink">Full price list</a></p>
+    </div>
+  </section>
+
+  <!-- ─── Gallery preview ─── -->
+  {
+    photos.length > 0 && (
+      <section class="band band--blush">
+        <div class="shell">
+          <div class="center">
+            <p class="eyebrow">Recent work</p>
+            <h2>Real brides, real mornings.</h2>
+            <hr class="rule rule--center" />
+          </div>
+          <ul class="grid">
+            {photos.map((p, i) => (
+              <li>
+                <Image
+                  src={p.image}
+                  alt={p.alt}
+                  widths={[320, 560, 800]}
+                  sizes="(max-width: 700px) 92vw, (max-width: 1000px) 44vw, 340px"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                />
+              </li>
+            ))}
+          </ul>
+          <p class="center">
+            <a href="/gallery/" class="textlink">
+              See the full gallery
+            </a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ─── How it works ─── -->
+  <section class="band">
+    <div class="shell">
+      <div class="center">
+        <p class="eyebrow">How booking works</p>
+        <h2>Four steps, no guesswork.</h2>
+        <hr class="rule rule--center" />
+      </div>
+
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li>
+              <span class="step-n" aria-hidden="true">
+                {s.n}
+              </span>
+              <h3>{s.title}</h3>
+              <p>{s.copy}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <!-- ─── Closing CTA ─── -->
+  <section class="band closing">
+    <Curve from="bottom-left" size={1.3} />
+    <div class="shell--narrow center">
+      <h2 class="closing-title">
+        Your wedding day deserves<br />nothing less than perfection.
+      </h2>
+      <p class="lede">
+        Krista takes a limited number of weddings each season, and dates go
+        early. Send your details and she will come back within {
+          site.responseTime
+        } with a quote for your day.
+      </p>
+      <p class="closing-cta"><a href="/book/" class="btn">Send an inquiry</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ─── Hero ─── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(36px, 5vw, 64px) clamp(48px, 7vw, 92px);
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 420px);
+    gap: clamp(32px, 6vw, 72px);
+    align-items: center;
+  }
+
+  /* Capped below the global h1 scale — the whole hero has to clear the fold
+     on a laptop, and three lines of 74px display type does not. */
+  .hero-copy h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    margin-bottom: 22px;
+  }
+
+  .hero-copy .lede {
+    margin-bottom: 34px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .hero-photo :global(img) {
+    width: 100%;
+    border-radius: 210px 210px var(--radius) var(--radius);
+    box-shadow: var(--shadow-lift);
+    /* Taller than the source frame, so `cover` crops top and bottom and
+       object-position can pull the faces into the arch. */
+    aspect-ratio: 1 / 1.12;
+    max-height: 500px;
+    object-fit: cover;
+    object-position: center 26%;
+  }
+
+  /* ─── Offerings ─── */
+  .offerings {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(20px, 3vw, 34px);
+    margin-block: clamp(40px, 6vw, 64px) 44px;
+  }
+
+  .offering {
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: clamp(28px, 3.4vw, 40px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .offering h3 {
+    margin-bottom: 14px;
+  }
+
+  .offering p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .from {
+    margin-top: auto;
+    padding-top: 22px;
+    font-size: 12px !important;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+  }
+
+  .from strong {
+    font-weight: 500;
+    color: var(--brown-deep);
+  }
+
+  /* ─── Gallery grid ─── */
+  .grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: clamp(14px, 2vw, 22px);
+    margin-block: clamp(40px, 6vw, 60px) 36px;
+  }
+
+  .grid :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* ─── Steps ─── */
+  .steps {
+    list-style: none;
+    counter-reset: step;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: clamp(28px, 4vw, 48px);
+    margin-top: clamp(44px, 6vw, 68px);
+  }
+
+  .steps li {
+    border-top: 1px solid var(--divider);
+    padding-top: 24px;
+  }
+
+  .step-n {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 30px;
+    color: var(--blush-deep);
+    margin-bottom: 10px;
+  }
+
+  .steps h3 {
+    font-size: 21px;
+    margin-bottom: 12px;
+  }
+
+  .steps p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ─── Closing ─── */
+  .closing {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-title {
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 22px;
+  }
+
+  .closing-cta {
+    margin-top: 36px;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-copy .lede {
+      margin-inline: auto;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+
+    .hero-photo {
+      order: -1;
+      max-width: 400px;
+      margin-inline: auto;
+    }
+
+    /* Shorter on a phone so the headline still clears the fold — a bride
+       should know what the business is without scrolling. */
+    .hero-photo :global(img) {
+      border-radius: 170px 170px var(--radius) var(--radius);
+      aspect-ratio: 1 / 1.05;
+      max-height: 360px;
+    }
+  }
+</style>

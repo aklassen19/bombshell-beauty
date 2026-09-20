@@ -1,0 +1,87 @@
+{
+  "groups": [
+    {
+      "title": "Booking and payment",
+      "items": [
+        {
+          "q": "How do I secure my date?",
+          "a": "Send an inquiry and Krista will reply within 48 hours with a contract and a quote for your day. Your date is held for one week from the moment that contract is sent. To confirm it, sign the last two pages and send a non-refundable deposit of 50% of your total."
+        },
+        {
+          "q": "How do I pay?",
+          "a": "Cash or e-transfer to BlondeBBeauty@gmail.com, in Canadian dollars. No personal cheques. The remaining balance is due 7 days before your wedding day."
+        },
+        {
+          "q": "Is the deposit refundable?",
+          "a": "No. The deposit holds your date and turns away other bookings, so it is non-refundable and non-transferable, including for illness, family emergency or a change of plans. It comes off your total, so you are not paying extra."
+        },
+        {
+          "q": "Can I change my services after booking?",
+          "a": "Yes, up to one month before your event. You can add services freely. You can also remove them, as long as no more than half of the booked services come off the contract after the deposit is paid."
+        },
+        {
+          "q": "What if we need to move the date?",
+          "a": "A reschedule is treated as a new contract rather than a cancellation. The new date needs to give Krista at least 6 months notice and has to be a date she has open."
+        },
+        {
+          "q": "Who pays for the bridal party?",
+          "a": "Whoever signs the contract is responsible for the full balance, including every member of the party listed on it. Most brides collect from their party and send one payment, but how you split it is up to you."
+        }
+      ]
+    },
+    {
+      "title": "On the day",
+      "items": [
+        {
+          "q": "Do you come to us?",
+          "a": "Always. Every service is on location, wherever you are getting ready. Travel within Edmonton is a $50 flat fee. Outside Edmonton it is $0.60 per kilometre."
+        },
+        {
+          "q": "How far will you travel?",
+          "a": "Krista regularly works across the Edmonton region, including St. Albert, Sherwood Park, Leduc, Spruce Grove and out into Wetaskiwin County. If you are further afield, ask anyway."
+        },
+        {
+          "q": "How long does everything take?",
+          "a": "Roughly 45 minutes to an hour per person for makeup, and about the same for hair. Krista builds a timeline into your contract with an arrival time and a finish time, so you know exactly when you will be ready."
+        },
+        {
+          "q": "What if we are running late?",
+          "a": "Weddings run late, and a few minutes is never a problem. If the party is 30 minutes or more behind, a $95 late fee applies, because it eats into the time held for everyone else."
+        },
+        {
+          "q": "What is the early morning fee?",
+          "a": "$125, and it applies when Krista has to leave home at or before 7:00am to reach you on time. It is based on her departure, not your appointment, so a distant venue can trigger it even for a later start."
+        },
+        {
+          "q": "Can you stay for touch-ups?",
+          "a": "Yes. Touch-ups are $100 per hour and are worth considering for a long day, an outdoor ceremony, or if you want a lip refresh before photos."
+        }
+      ]
+    },
+    {
+      "title": "Your look",
+      "items": [
+        {
+          "q": "Do I need a trial?",
+          "a": "It is not required, but it is strongly recommended. A trial is the same price as your wedding day service and it is where the two of you settle on the look properly, with time to adjust, so the morning of holds no surprises."
+        },
+        {
+          "q": "I have sensitive skin or allergies. What should I do?",
+          "a": "Tell Krista before the day, and note it on your contract. She works with a wide range of products and can plan around most sensitivities, but she needs to know in advance."
+        },
+        {
+          "q": "What should I do before my appointment?",
+          "a": "Arrive with a clean, moisturised face and dry, fully styled-free hair, unless Krista has told you otherwise. Keep any new skincare or a first-time facial well clear of the wedding week."
+        },
+        {
+          "q": "Can Krista share photos from my wedding?",
+          "a": "Only with your permission, which you give or withhold when you sign your contract. If you are happy to be featured, you can leave your Instagram handle so you get tagged."
+        },
+        {
+          "q": "What if Krista cannot make it?",
+          "a": "In the rare case of illness or an emergency, she will find a replacement artist and give you as much notice as she can. If no replacement can be found, every dollar paid is refunded in full and the contract ends."
+        }
+      ]
+    }
+  ]
+}

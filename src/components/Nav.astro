@@ -1,0 +1,233 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo.png';
+import site from '../content/site.json';
+
+const links = [
+  { href: '/about/', label: 'About' },
+  { href: '/gallery/', label: 'Gallery' },
+  { href: '/services/', label: 'Services' },
+  { href: '/faq/', label: 'FAQ' },
+];
+
+// Trailing slashes are normalised so /about and /about/ both light up.
+const here = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isCurrent = (href: string) => here === href.replace(/\/+$/, '');
+---
+
+<header class="bar">
+  <nav class="inner" aria-label="Main">
+    <a href="/" class="logo" aria-label={`${site.businessName} — home`}>
+      <Image src={logo} alt="" width={445} height={234} loading="eager" />
+    </a>
+
+    <button
+      class="toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+    >
+      <span class="visually-hidden">Menu</span>
+      <span class="bars" aria-hidden="true"></span>
+    </button>
+
+    <div class="menu" id="nav-menu">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={['link', { current: isCurrent(l.href) }]}
+            aria-current={isCurrent(l.href) ? 'page' : undefined}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a href="/book/" class="btn book">Book your date</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.toggle');
+  const menu = document.getElementById('nav-menu');
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    menu?.classList.toggle('open', !open);
+  });
+
+  // A tap outside, or Escape, closes it — otherwise the panel traps the page.
+  document.addEventListener('click', (e) => {
+    if (!menu?.classList.contains('open')) return;
+    if (
+      e.target instanceof Node &&
+      !menu.contains(e.target) &&
+      !toggle?.contains(e.target)
+    ) {
+      menu.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('open')) {
+      menu.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.focus();
+    }
+  });
+</script>
+
+<style>
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--cream) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .inner {
+    width: min(var(--shell), 100% - var(--gutter) * 2);
+    margin-inline: auto;
+    height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .logo {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .logo :global(img) {
+    height: 54px;
+    width: auto;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 2.4vw, 34px);
+  }
+
+  .link {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+    opacity: 0.78;
+    white-space: nowrap;
+  }
+
+  .link:hover {
+    opacity: 1;
+  }
+
+  .link.current {
+    opacity: 1;
+    border-bottom-color: var(--brown);
+  }
+
+  .book {
+    padding: 13px 26px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .toggle {
+    display: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 10px;
+    margin-right: -10px;
+  }
+
+  .bars,
+  .bars::before,
+  .bars::after {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--brown);
+    border-radius: 2px;
+    transition: transform 0.25s ease;
+  }
+
+  .bars::before,
+  .bars::after {
+    content: '';
+    position: relative;
+  }
+
+  .bars::before {
+    top: -7px;
+  }
+
+  .bars::after {
+    top: 5.5px;
+  }
+
+  @media (max-width: 860px) {
+    .inner {
+      height: 72px;
+    }
+
+    .logo :global(img) {
+      height: 44px;
+    }
+
+    .toggle {
+      display: block;
+    }
+
+    .menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--cream);
+      border-bottom: 1px solid var(--divider);
+      padding: 8px var(--gutter) 28px;
+      box-shadow: var(--shadow-soft);
+      display: none;
+    }
+
+    .menu.open {
+      display: flex;
+    }
+
+    .link {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--divider);
+      font-size: 13px;
+      opacity: 1;
+    }
+
+    .link.current {
+      color: var(--brown-deep);
+      font-weight: 500;
+    }
+
+    .book {
+      margin-top: 22px;
+      align-self: flex-start;
+    }
+  }
+</style>

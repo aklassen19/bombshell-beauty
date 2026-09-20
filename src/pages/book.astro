@@ -1,0 +1,669 @@
+---
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+import site from '../content/site.json';
+import services from '../content/services.json';
+
+/**
+ * Where the form posts. Submissions land directly in Krista's inbox — no
+ * dashboard to remember to check.
+ *
+ * Both supported services work the same way: they accept the POST and email
+ * it on. Web3Forms identifies the destination with an access key in the body;
+ * Formspree bakes it into the URL. See SETUP.md.
+ *
+ * The old site shipped with the literal placeholder `YOUR_FORM_ID` still in
+ * place, so every inquiry sent through it failed silently. Rather than repeat
+ * that, an unset endpoint falls back to composing the same message in the
+ * bride's own mail app. The form is never a dead end.
+ */
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY ?? '';
+const hasEndpoint = Boolean(endpoint);
+
+const pickable = [
+  ...services.groups[0].items.map((i) => i.name),
+  ...services.groups[1].items.map((i) => i.name),
+];
+---
+
+<Base
+  title="Book Your Date"
+  description={`Check your wedding date with ${site.artist}. Send your details and get a quote within ${site.responseTime}.`}
+>
+  <section class="band head">
+    <Curve from="top-left" size={0.9} />
+    <div class="shell--narrow center">
+      <p class="eyebrow">Let's make it official</p>
+      <h1>Check your date</h1>
+      <hr class="rule rule--center" />
+      <p class="lede">
+        Tell Krista about your day and she will come back within {
+          site.responseTime
+        } with a quote. Nothing here commits you to anything.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell--narrow body">
+    <form
+      id="inquiry"
+      action={endpoint || undefined}
+      method="POST"
+      data-endpoint={endpoint}
+      data-email={site.email}
+      novalidate
+    >
+      {accessKey && <input type="hidden" name="access_key" value={accessKey} />}
+      <input type="hidden" name="subject" value="New wedding inquiry" />
+      <input type="hidden" name="_subject" value="New wedding inquiry" />
+      <input type="hidden" name="from_name" value="Blonde Bombshell Beauty website" />
+      <!-- Where the service sends people whose browser blocked the script. -->
+      <input type="hidden" name="_next" value="/thank-you/" />
+      <input type="hidden" name="redirect" value="/thank-you/" />
+
+      <!-- Spam trap. Real people never see it; bots fill it in. -->
+      <div class="trap" aria-hidden="true">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="_gotcha" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <fieldset class="block">
+        <legend><span class="n">01</span> Your details</legend>
+        <div class="fields">
+          <p class="field">
+            <label for="name">Your name <em>*</em></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              required
+            />
+          </p>
+          <p class="field">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" />
+          </p>
+          <p class="field wide">
+            <label for="email">Email <em>*</em></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              required
+            />
+          </p>
+        </div>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend><span class="n">02</span> Your wedding</legend>
+        <div class="fields">
+          <p class="field">
+            <label for="wedding_date">Wedding date <em>*</em></label>
+            <input type="date" id="wedding_date" name="wedding_date" required />
+          </p>
+          <p class="field">
+            <label for="start_time">Ready by</label>
+            <input
+              type="text"
+              id="start_time"
+              name="start_time"
+              placeholder="e.g. 1:00pm"
+            />
+          </p>
+          <p class="field wide">
+            <label for="location">Where you are getting ready</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              placeholder="Venue, hotel or address"
+            />
+            <span class="hint"
+              >Krista travels to you. Outside Edmonton is fine — it just
+              changes the travel fee.</span
+            >
+          </p>
+        </div>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend><span class="n">03</span> What you are after</legend>
+        <ul class="picks">
+          {
+            pickable.map((name, i) => (
+              <li>
+                <input
+                  type="checkbox"
+                  id={`svc-${i}`}
+                  name="services"
+                  value={name}
+                />
+                <label for={`svc-${i}`}>{name}</label>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="hint hint--block">
+          Rough is fine. Nothing here is locked in until you sign a contract.
+        </p>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend><span class="n">04</span> How many people</legend>
+        <div class="fields counts">
+          <p class="field">
+            <label for="num_makeup">Makeup</label>
+            <input
+              type="number"
+              id="num_makeup"
+              name="num_makeup"
+              min="0"
+              max="40"
+              inputmode="numeric"
+              placeholder="0"
+            />
+          </p>
+          <p class="field">
+            <label for="num_hair">Hair</label>
+            <input
+              type="number"
+              id="num_hair"
+              name="num_hair"
+              min="0"
+              max="40"
+              inputmode="numeric"
+              placeholder="0"
+            />
+          </p>
+          <p class="field">
+            <label for="num_jr">Under 16</label>
+            <input
+              type="number"
+              id="num_jr"
+              name="num_jr"
+              min="0"
+              max="40"
+              inputmode="numeric"
+              placeholder="0"
+            />
+          </p>
+        </div>
+        <p class="hint hint--block">Include yourself in the count.</p>
+      </fieldset>
+
+      <fieldset class="block">
+        <legend><span class="n">05</span> Anything else</legend>
+        <div class="fields">
+          <p class="field wide">
+            <label for="notes">Notes or questions</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="5"
+              placeholder="Your vision for the day, allergies or sensitivities, timings you are worried about, anything at all."></textarea>
+          </p>
+          <p class="field wide">
+            <label for="instagram">Your Instagram <span class="opt">optional</span></label>
+            <input
+              type="text"
+              id="instagram"
+              name="instagram"
+              placeholder="@yourhandle"
+            />
+          </p>
+        </div>
+      </fieldset>
+
+      <div class="submit">
+        <p class="submit-note">
+          This goes straight to Krista's inbox. She replies within {
+            site.responseTime
+          }, and your date is held for one week once a contract is sent.
+        </p>
+        <button type="submit" class="btn">Send my inquiry</button>
+        <p class="alt">
+          Prefer email? <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+
+      <p class="formerror" id="formerror" role="alert" hidden></p>
+    </form>
+
+    <div class="done" id="done" hidden tabindex="-1">
+      <h2>That's on its way.</h2>
+      <p>
+        Krista will be in touch within {site.responseTime}. If it is urgent, or
+        your date is close, email her directly at <a
+          href={`mailto:${site.email}`}>{site.email}</a
+        >.
+      </p>
+    </div>
+
+    {
+      !hasEndpoint && (
+        <p class="devnote">
+          <strong>Setup note (only visible until configured):</strong> no form
+          endpoint is set, so this form opens the bride's own email app
+          pre-filled instead of delivering to {site.email} directly. Step 1 of
+          SETUP.md finishes the wiring — it takes about two minutes.
+        </p>
+      )
+    }
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#inquiry');
+  const done = document.querySelector<HTMLElement>('#done');
+  const errorBox = document.querySelector<HTMLElement>('#formerror');
+
+  if (form && done && errorBox) {
+    const endpoint = form.dataset.endpoint ?? '';
+    const email = form.dataset.email ?? '';
+
+    // The date picker should not offer a wedding in the past.
+    const date = form.querySelector<HTMLInputElement>('#wedding_date');
+    if (date) date.min = new Date().toISOString().slice(0, 10);
+
+    const showError = (msg: string) => {
+      errorBox.textContent = msg;
+      errorBox.hidden = false;
+    };
+
+    /** Fallback when no endpoint is configured: hand it to their mail app. */
+    const composeMailto = (data: FormData) => {
+      const label: Record<string, string> = {
+        name: 'Name',
+        phone: 'Phone',
+        email: 'Email',
+        wedding_date: 'Wedding date',
+        start_time: 'Ready by',
+        location: 'Getting ready at',
+        num_makeup: 'Makeup',
+        num_hair: 'Hair',
+        num_jr: 'Under 16',
+        notes: 'Notes',
+        instagram: 'Instagram',
+      };
+      const lines: string[] = [];
+      for (const [key, text] of Object.entries(label)) {
+        const v = String(data.get(key) ?? '').trim();
+        if (v) lines.push(`${text}: ${v}`);
+      }
+      const picked = data.getAll('services').filter(Boolean);
+      if (picked.length) lines.push(`Services: ${picked.join(', ')}`);
+
+      const subject = encodeURIComponent('Wedding inquiry');
+      const body = encodeURIComponent(lines.join('\n'));
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+
+      if (!endpoint) {
+        composeMailto(data);
+        return;
+      }
+
+      const button = form.querySelector<HTMLButtonElement>('button[type=submit]');
+      const label = button?.textContent ?? '';
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.hidden = true;
+        done.hidden = false;
+        done.focus();
+        done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch {
+        showError(
+          `That did not send — the connection may have dropped. Please try again, or email Krista directly at ${email}.`,
+        );
+        if (button) {
+          button.disabled = false;
+          button.textContent = label;
+        }
+      }
+    });
+  }
+</script>
+
+<style>
+  .head {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: clamp(36px, 5vw, 56px);
+  }
+
+  .body {
+    padding-bottom: var(--band);
+  }
+
+  .trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .block {
+    border: 0;
+    padding: 0;
+    margin-bottom: clamp(36px, 5vw, 52px);
+  }
+
+  legend {
+    display: flex;
+    align-items: baseline;
+    gap: 13px;
+    width: 100%;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.3vw, 25px);
+    color: var(--brown-deep);
+    padding-bottom: 15px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .n {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--brown-soft);
+  }
+
+  .fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+
+  .counts {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 420px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+  }
+
+  label em {
+    font-style: normal;
+    color: var(--brown);
+  }
+
+  .opt {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-weight: 300;
+    opacity: 0.7;
+  }
+
+  input[type='text'],
+  input[type='tel'],
+  input[type='email'],
+  input[type='date'],
+  input[type='number'],
+  textarea {
+    font-family: var(--font-body);
+    font-size: 16px; /* 16px stops iOS zooming on focus */
+    font-weight: 300;
+    color: var(--brown-deep);
+    background: var(--blush);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 14px 16px;
+    width: 100%;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  input:hover,
+  textarea:hover {
+    border-color: var(--blush-deep);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    background: var(--cream);
+    border-color: var(--brown);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--brown-deep);
+    outline-offset: 2px;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: color-mix(in srgb, var(--brown-soft) 60%, transparent);
+  }
+
+  textarea {
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--brown-soft);
+    line-height: 1.6;
+  }
+
+  .hint--block {
+    margin-top: 16px;
+  }
+
+  /* ─── Service picker ─── */
+  .picks {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 10px;
+  }
+
+  .picks li {
+    position: relative;
+    display: flex;
+  }
+
+  .picks input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  /* Flex so a two-line service name still gives a card the same height as
+     its neighbours. */
+  .picks label {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--brown);
+    background: var(--blush);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 14px 16px 14px 44px;
+    cursor: pointer;
+    position: relative;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .picks label::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    translate: 0 -50%;
+    width: 17px;
+    height: 17px;
+    border: 1px solid var(--blush-deep);
+    border-radius: 5px;
+    background: var(--cream);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .picks label::after {
+    content: '';
+    position: absolute;
+    left: 21.5px;
+    top: 50%;
+    width: 5px;
+    height: 10px;
+    border: solid var(--cream);
+    border-width: 0 1.5px 1.5px 0;
+    rotate: 45deg;
+    translate: 0 -65%;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .picks label:hover {
+    border-color: var(--blush-deep);
+  }
+
+  .picks input:checked + label {
+    background: color-mix(in srgb, var(--blush) 60%, var(--cream));
+    border-color: var(--brown);
+  }
+
+  .picks input:checked + label::before {
+    background: var(--brown);
+    border-color: var(--brown);
+  }
+
+  .picks input:checked + label::after {
+    opacity: 1;
+  }
+
+  .picks input:focus-visible + label {
+    outline: 2px solid var(--brown-deep);
+    outline-offset: 2px;
+  }
+
+  /* ─── Submit ─── */
+  .submit {
+    text-align: center;
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: clamp(32px, 5vw, 48px);
+  }
+
+  .submit-note {
+    font-size: 14px;
+    color: var(--brown-soft);
+    max-width: 44ch;
+    margin: 0 auto 26px;
+    line-height: 1.7;
+  }
+
+  .alt {
+    font-size: 13px;
+    color: var(--brown-soft);
+    margin-top: 20px;
+  }
+
+  .alt a {
+    color: var(--brown-deep);
+  }
+
+  .formerror {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--brown);
+    background: var(--cream);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--brown-deep);
+  }
+
+  /* ─── Success ─── */
+  .done {
+    text-align: center;
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: clamp(48px, 7vw, 76px) clamp(28px, 5vw, 56px);
+  }
+
+  .done h2 {
+    margin-bottom: 14px;
+  }
+
+  .done p {
+    font-size: 16px;
+    max-width: 48ch;
+    margin-inline: auto;
+  }
+
+  .done a {
+    color: var(--brown-deep);
+  }
+
+  .devnote {
+    margin-top: 28px;
+    padding: 16px 20px;
+    border: 1px dashed var(--brown-soft);
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--brown-soft);
+  }
+
+  @media (max-width: 600px) {
+    .fields {
+      grid-template-columns: 1fr;
+    }
+
+    .counts {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+  }
+</style>

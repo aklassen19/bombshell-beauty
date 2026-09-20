@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+import site from '../content/site.json';
+import services from '../content/services.json';
+---
+
+<Base
+  title="Services & Pricing"
+  description={`${services.year} bridal hair and makeup pricing for ${site.businessName}. On-location services across Edmonton and central Alberta.`}
+>
+  <section class="band head">
+    <Curve from="top-right" size={0.9} />
+    <div class="shell--narrow center">
+      <p class="eyebrow">{services.year} pricing</p>
+      <h1>Services<br />&amp; Pricing</h1>
+      <hr class="rule rule--center" />
+      <p class="lede">{services.note}</p>
+    </div>
+  </section>
+
+  <section class="shell--narrow lists">
+    {
+      services.groups.map((group, i) => (
+        <section class="group">
+          <h2 class="group-title">
+            <span class="group-n" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            {group.title}
+          </h2>
+
+          <ul>
+            {group.items.map((item: any) => (
+              <li>
+                <span class="name">
+                  {item.name}
+                  {item.tag && <span class="tag">{item.tag}</span>}
+                </span>
+                <span class="dots" aria-hidden="true" />
+                <span class="price">
+                  {item.price}
+                  {item.unit && <small>{item.unit}</small>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <aside class="terms">
+      <h2>Holding your date</h2>
+      <p>
+        A non-refundable deposit of <strong>{site.depositPercent}%</strong> of your
+        total confirms the booking. Your date is held for one week from the day your
+        contract is sent.
+      </p>
+      <p>
+        The remaining balance is due <strong
+          >{site.balanceDueDays} days before your wedding</strong
+        >. Payment is by cash or e-transfer to <strong>{site.email}</strong>, in
+        Canadian dollars.
+      </p>
+      <p class="fine">
+        Prices are per person unless noted. Travel is quoted with your package.
+        Full terms are set out in your contract — the <a href="/faq/">FAQ</a> covers
+        the common questions.
+      </p>
+    </aside>
+
+    <p class="center cta"><a href="/book/" class="btn">Check your date</a></p>
+  </section>
+</Base>
+
+<style>
+  .head {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  .lists {
+    padding-bottom: var(--band);
+  }
+
+  .group {
+    margin-bottom: clamp(44px, 6vw, 68px);
+  }
+
+  .group-title {
+    font-size: clamp(22px, 2.6vw, 28px);
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding-bottom: 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .group-n {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--brown-soft);
+  }
+
+  .group ul {
+    list-style: none;
+  }
+
+  .group li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 15px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--divider) 55%, transparent);
+  }
+
+  .name {
+    font-size: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: var(--blush);
+    color: var(--brown-deep);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .dots {
+    flex: 1;
+    min-width: 18px;
+    border-bottom: 1px dotted var(--blush-deep);
+    transform: translateY(-4px);
+  }
+
+  .price {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--brown-deep);
+    white-space: nowrap;
+  }
+
+  .price small {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--brown-soft);
+    margin-left: 5px;
+  }
+
+  .terms {
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: clamp(28px, 4vw, 44px);
+  }
+
+  .terms h2 {
+    font-size: clamp(21px, 2.4vw, 26px);
+    margin-bottom: 16px;
+  }
+
+  .terms p + p {
+    margin-top: 14px;
+  }
+
+  .terms p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .terms strong {
+    font-weight: 500;
+    color: var(--brown-deep);
+  }
+
+  .terms a {
+    color: var(--brown-deep);
+  }
+
+  .fine {
+    font-size: 13px !important;
+    color: var(--brown-soft);
+    padding-top: 14px;
+    margin-top: 18px !important;
+    border-top: 1px solid var(--blush-deep);
+  }
+
+  .cta {
+    margin-top: clamp(40px, 6vw, 60px);
+  }
+
+  @media (max-width: 560px) {
+    .group li {
+      flex-wrap: wrap;
+      gap: 4px 10px;
+    }
+
+    .dots {
+      display: none;
+    }
+
+    .name {
+      flex: 1 1 100%;
+    }
+
+    .price {
+      font-size: 18px;
+    }
+  }
+</style>

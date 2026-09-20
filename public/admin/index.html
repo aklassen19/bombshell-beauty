@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Edit your website — Blonde Bombshell Beauty</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        font-family:
+          'Poppins',
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #fffbfa;
+        color: #835741;
+      }
+      /* A short orientation note above the CMS, for someone who has never
+         seen one before. Hidden once the editor takes over the screen. */
+      .primer {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 48px 24px 32px;
+        text-align: center;
+        line-height: 1.7;
+      }
+      .primer h1 {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-weight: 500;
+        font-size: 30px;
+        color: #5e3b2b;
+        margin: 0 0 12px;
+      }
+      .primer p {
+        margin: 0 0 10px;
+        font-size: 15px;
+      }
+      .primer strong {
+        font-weight: 500;
+        color: #5e3b2b;
+      }
+      .primer .small {
+        font-size: 13px;
+        opacity: 0.75;
+        margin-top: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="primer" id="primer">
+      <h1>Edit your website</h1>
+      <p>
+        Sign in with GitHub below. Pick what you want to change on the left —
+        <strong>Prices</strong>, <strong>FAQ</strong>,
+        <strong>Gallery</strong>, <strong>Reviews</strong> or
+        <strong>Business details</strong>.
+      </p>
+      <p>
+        Make your change, then press <strong>Publish</strong>. The website
+        updates itself about a minute later. Nothing goes live until you press
+        Publish, so it is safe to look around.
+      </p>
+      <p class="small">
+        Stuck, or something looks wrong? Nothing here can break the site
+        permanently — every change can be undone.
+      </p>
+    </div>
+
+    <script src="https://unpkg.com/decap-cms@^3.8.4/dist/decap-cms.js"></script>
+    <script>
+      // Once the CMS has rendered its own full-screen UI, the primer is just
+      // in the way.
+      window.addEventListener('load', function () {
+        var primer = document.getElementById('primer');
+        var check = setInterval(function () {
+          if (document.querySelector('#nc-root, [class*="AppMainView"]')) {
+            if (primer) primer.style.display = 'none';
+            clearInterval(check);
+          }
+        }, 300);
+        setTimeout(function () {
+          clearInterval(check);
+        }, 15000);
+      });
+    </script>
+  </body>
+</html>

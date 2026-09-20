@@ -1,0 +1,103 @@
+---
+import testimonials from '../content/testimonials.json';
+
+/**
+ * Renders nothing until there are real reviews to show.
+ *
+ * These have to be words brides actually wrote. An empty section is honest;
+ * an invented one is not, and a bride who books on the strength of a made-up
+ * quote has been misled. Paste real ones into src/content/testimonials.json,
+ * or add them through the CMS, and this appears on its own.
+ */
+const items = testimonials.items as {
+  quote: string;
+  name: string;
+  detail?: string;
+}[];
+---
+
+{
+  items.length > 0 && (
+    <section class="band band--blush">
+      <div class="shell">
+        <div class="center">
+          <p class="eyebrow">Kind words</p>
+          <h2>From her brides.</h2>
+          <hr class="rule rule--center" />
+        </div>
+
+        <ul class="quotes">
+          {items.map((t) => (
+            <li>
+              <figure>
+                <blockquote>
+                  <p>{t.quote}</p>
+                </blockquote>
+                <figcaption>
+                  <span class="name">{t.name}</span>
+                  {t.detail && <span class="detail">{t.detail}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .quotes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(20px, 3vw, 32px);
+    margin-top: clamp(40px, 6vw, 60px);
+  }
+
+  figure {
+    background: var(--cream);
+    border-radius: var(--radius);
+    padding: clamp(28px, 3.4vw, 40px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  blockquote p {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2vw, 21px);
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--brown-deep);
+  }
+
+  blockquote p::before {
+    content: '\201C';
+  }
+
+  blockquote p::after {
+    content: '\201D';
+  }
+
+  figcaption {
+    margin-top: auto;
+    padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .name {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brown);
+  }
+
+  .detail {
+    font-size: 13px;
+    color: var(--brown-soft);
+  }
+</style>

@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo.png';
+import site from '../content/site.json';
+
+const year = new Date().getFullYear();
+const telHref = `tel:+1${site.phone.replace(/\D/g, '')}`;
+---
+
+<footer class="foot">
+  <div class="shell inner">
+    <div class="col brand">
+      <Image src={logo} alt={site.businessName} width={445} height={234} />
+      <p class="tagline">{site.tagline}</p>
+      <p class="serving">
+        Serving {site.areaServed.slice(0, -1).join(', ')} and {
+          site.areaServed.at(-1)
+        }.
+      </p>
+    </div>
+
+    <nav class="col" aria-label="Footer">
+      <h2 class="heading">Explore</h2>
+      <a href="/about/">About Krista</a>
+      <a href="/gallery/">Gallery</a>
+      <a href="/services/">Services &amp; pricing</a>
+      <a href="/faq/">FAQ</a>
+      <a href="/book/">Book your date</a>
+    </nav>
+
+    <div class="col">
+      <h2 class="heading">Get in touch</h2>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href={telHref}>{site.phone}</a>
+      <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+        {site.instagramHandle}
+      </a>
+    </div>
+  </div>
+
+  <div class="base">
+    <p>&copy; {year} {site.businessName}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: var(--blush);
+    margin-top: auto;
+    position: relative;
+  }
+
+  .inner {
+    padding-block: clamp(48px, 7vw, 76px) 44px;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .brand :global(img) {
+    height: 62px;
+    width: auto;
+    margin-bottom: 14px;
+  }
+
+  .tagline {
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 30ch;
+  }
+
+  .serving {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--brown-soft);
+    max-width: 34ch;
+  }
+
+  .heading {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--brown-soft);
+    margin-bottom: 8px;
+  }
+
+  .col a {
+    font-size: 14px;
+    color: var(--brown);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    opacity: 0.85;
+  }
+
+  .col a:hover {
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .base {
+    border-top: 1px solid var(--blush-deep);
+    text-align: center;
+    padding: 20px var(--gutter);
+  }
+
+  .base p {
+    font-size: 12px;
+    color: var(--brown-soft);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 760px) {
+    .inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding-block: 48px 36px;
+    }
+
+    .col {
+      align-items: center;
+    }
+
+    .tagline,
+    .serving {
+      max-width: 40ch;
+    }
+  }
+</style>

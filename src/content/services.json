@@ -1,0 +1,57 @@
+{
+  "year": 2026,
+  "note": "All services are on location. Travel is quoted with your package.",
+  "groups": [
+    {
+      "title": "Makeup",
+      "items": [
+        {
+          "name": "Bridal makeup with lashes",
+          "price": "$165",
+          "tag": "Most popular"
+        },
+        { "name": "Bridal makeup trial with lashes", "price": "$165" },
+        { "name": "Bridal makeup, no lashes", "price": "$150" },
+        {
+          "name": "Bridal party makeup with lashes",
+          "price": "$140",
+          "unit": "per person"
+        },
+        {
+          "name": "Bridal party makeup, no lashes",
+          "price": "$125",
+          "unit": "per person"
+        },
+        { "name": "Junior makeup, up to age 16", "price": "$100" },
+        { "name": "Lashes on their own", "price": "$15" }
+      ]
+    },
+    {
+      "title": "Hair",
+      "items": [
+        { "name": "Bridal hair styling", "price": "$160" },
+        { "name": "Bridal hair styling trial", "price": "$160" },
+        {
+          "name": "Bridal party hair styling",
+          "price": "$140",
+          "unit": "per person"
+        },
+        { "name": "Junior hair, up to age 16", "price": "$100" }
+      ]
+    },
+    {
+      "title": "Additional",
+      "items": [
+        { "name": "Early morning fee, 7am or earlier", "price": "$125" },
+        { "name": "Touch-ups", "price": "$100", "unit": "per hour" },
+        { "name": "Second artist", "price": "$250" },
+        { "name": "Travel within Edmonton", "price": "$50", "unit": "flat" },
+        {
+          "name": "Travel outside Edmonton",
+          "price": "$0.60",
+          "unit": "per km"
+        }
+      ]
+    }
+  ]
+}

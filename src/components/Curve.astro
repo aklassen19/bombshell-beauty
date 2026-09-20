@@ -1,0 +1,58 @@
+---
+/**
+ * The soft quarter-circle sweep that divides cream from blush on every page
+ * of Krista's contract and price sheet. It is the most recognisable thing in
+ * her brand, so it carries the same job here.
+ *
+ * It is drawn as an oversized circle rather than an SVG path so it scales
+ * smoothly to any viewport without distorting the arc.
+ */
+interface Props {
+  /** Which corner the circle swells out from. */
+  from?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  /** Fill colour. Defaults to blush on cream. */
+  color?: string;
+  /** Diameter as a share of the container's width. */
+  size?: number;
+}
+
+const { from = 'top-left', color = 'var(--blush)', size = 1.35 } = Astro.props;
+
+const anchors = {
+  'top-left': { top: '-45%', left: '-30%' },
+  'top-right': { top: '-45%', right: '-30%' },
+  'bottom-left': { bottom: '-45%', left: '-30%' },
+  'bottom-right': { bottom: '-45%', right: '-30%' },
+} as const;
+
+const pos = anchors[from];
+const style = Object.entries(pos)
+  .map(([k, v]) => `${k}:${v}`)
+  .join(';');
+---
+
+<div
+  class="curve"
+  aria-hidden="true"
+  style={`${style};--curve-color:${color};--curve-size:${size}`}
+>
+</div>
+
+<style>
+  .curve {
+    position: absolute;
+    width: calc(var(--curve-size) * 100%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--curve-color);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Anything inside a band sits above the sweep. */
+  :global(.band > .shell),
+  :global(.band > .shell--narrow) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

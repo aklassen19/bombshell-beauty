@@ -1,0 +1,23 @@
+{
+  "businessName": "Blonde Bombshell Beauty",
+  "artist": "Krista Matthews",
+  "tagline": "Bridal hair and makeup artistry in Edmonton, Alberta.",
+  "email": "BlondeBBeauty@gmail.com",
+  "phone": "780-937-3022",
+  "instagram": "https://www.instagram.com/blondebombshell_beauty/",
+  "instagramHandle": "@blondebombshell_beauty",
+  "city": "Edmonton",
+  "region": "AB",
+  "areaServed": [
+    "Edmonton",
+    "St. Albert",
+    "Sherwood Park",
+    "Leduc",
+    "Spruce Grove",
+    "Wetaskiwin"
+  ],
+  "responseTime": "48 hours",
+  "depositPercent": 50,
+  "balanceDueDays": 7,
+  "yearsExperience": 10
+}

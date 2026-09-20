@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+import site from '../content/site.json';
+---
+
+<Base
+  title="Thank you"
+  description="Your inquiry is on its way to Krista."
+>
+  <section class="band wrap">
+    <Curve from="top-right" size={0.9} />
+    <div class="shell--narrow center">
+      <p class="eyebrow">Received</p>
+      <h1>That's on its way.</h1>
+      <hr class="rule rule--center" />
+      <p class="lede">
+        Krista will be in touch within {site.responseTime}. If your date is
+        close, or something is urgent, email her directly at
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+      <p class="cta">
+        <a href="/gallery/" class="btn btn--ghost">See her work</a>
+        <a href="/faq/" class="textlink">Read the FAQ</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wrap {
+    position: relative;
+    overflow: hidden;
+    min-height: 58vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .lede a {
+    color: var(--brown-deep);
+  }
+
+  .cta {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+</style>

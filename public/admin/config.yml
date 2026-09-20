@@ -1,0 +1,165 @@
+backend:
+  name: github
+  # Set this to the real repo once it exists on GitHub.
+  repo: OWNER/bombshell-beauty
+  branch: main
+  # Points at the OAuth handler in /api, since this is not hosted on Netlify.
+  base_url: https://blondebombshellbeauty.ca
+  auth_endpoint: api/auth
+
+# Krista uploads photos straight into the folder Astro optimises from, so
+# anything she adds is resized and converted to WebP automatically.
+media_folder: src/assets/photos
+public_folder: /src/assets/photos
+
+publish_mode: simple
+site_url: https://blondebombshellbeauty.ca
+logo_url: https://blondebombshellbeauty.ca/apple-touch-icon.png
+
+collections:
+  # ─── Prices ───
+  - name: services
+    label: Prices
+    files:
+      - name: services
+        label: Price list
+        file: src/content/services.json
+        description: >-
+          The prices shown on the Services page. Change a number here and the
+          website updates itself a minute or two later.
+        fields:
+          - { name: year, label: Pricing year, widget: number, value_type: int }
+          - name: note
+            label: Note under the heading
+            widget: string
+          - name: groups
+            label: Sections
+            widget: list
+            collapsed: false
+            fields:
+              - { name: title, label: Section name, widget: string }
+              - name: items
+                label: Services
+                widget: list
+                fields:
+                  - { name: name, label: Service, widget: string }
+                  - { name: price, label: Price, widget: string, hint: 'Include the $, e.g. $165' }
+                  - name: unit
+                    label: Per what?
+                    widget: string
+                    required: false
+                    hint: 'Leave blank for a flat price. Otherwise: per person, per hour, per km'
+                  - name: tag
+                    label: Little badge
+                    widget: string
+                    required: false
+                    hint: 'Optional, e.g. Most popular'
+
+  # ─── FAQ ───
+  - name: faq
+    label: FAQ
+    files:
+      - name: faq
+        label: Questions & answers
+        file: src/content/faq.json
+        fields:
+          - name: groups
+            label: Sections
+            widget: list
+            collapsed: false
+            fields:
+              - { name: title, label: Section name, widget: string }
+              - name: items
+                label: Questions
+                widget: list
+                fields:
+                  - { name: q, label: Question, widget: string }
+                  - { name: a, label: Answer, widget: text }
+
+  # ─── Gallery ───
+  - name: gallery
+    label: Gallery
+    files:
+      - name: gallery
+        label: Gallery photos
+        file: src/content/gallery.json
+        description: >-
+          Photos on the Gallery page, in order. The first one gets the big slot.
+        fields:
+          - name: items
+            label: Photos
+            widget: list
+            fields:
+              - name: file
+                label: Photo
+                widget: image
+                media_library: { config: { multiple: false } }
+                hint: Upload a photo, or pick one already used on the site.
+              - name: alt
+                label: Describe the photo
+                widget: string
+                hint: >-
+                  One short line describing what is in the picture. Screen
+                  readers read this aloud, and Google uses it too.
+
+  # ─── Reviews ───
+  - name: testimonials
+    label: Reviews
+    files:
+      - name: testimonials
+        label: Bride reviews
+        file: src/content/testimonials.json
+        description: >-
+          Real words from real brides only. The Reviews section stays hidden
+          until there is at least one here.
+        fields:
+          - name: items
+            label: Reviews
+            widget: list
+            required: false
+            fields:
+              - { name: quote, label: What she said, widget: text }
+              - { name: name, label: Her name, widget: string }
+              - name: detail
+                label: Detail
+                widget: string
+                required: false
+                hint: 'Optional, e.g. Married September 2026'
+
+  # ─── Business details ───
+  - name: site
+    label: Business details
+    files:
+      - name: site
+        label: Contact & business info
+        file: src/content/site.json
+        description: >-
+          Used across the whole site, including the footer and what Google
+          shows in search results.
+        fields:
+          - { name: businessName, label: Business name, widget: string }
+          - { name: artist, label: Artist name, widget: string }
+          - { name: tagline, label: Tagline, widget: string }
+          - { name: email, label: Email, widget: string }
+          - { name: phone, label: Phone, widget: string }
+          - { name: instagram, label: Instagram link, widget: string }
+          - { name: instagramHandle, label: Instagram handle, widget: string }
+          - { name: city, label: City, widget: string }
+          - { name: region, label: Province, widget: string }
+          - name: areaServed
+            label: Places you travel to
+            widget: list
+            field: { name: place, label: Place, widget: string }
+          - { name: responseTime, label: How fast you reply, widget: string }
+          - name: depositPercent
+            label: Deposit percentage
+            widget: number
+            value_type: int
+          - name: balanceDueDays
+            label: Balance due, days before
+            widget: number
+            value_type: int
+          - name: yearsExperience
+            label: Years of experience
+            widget: number
+            value_type: int

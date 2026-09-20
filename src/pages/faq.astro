@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+import site from '../content/site.json';
+import faq from '../content/faq.json';
+
+// The same questions, handed to Google so they can appear directly in results.
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.groups.flatMap((g) =>
+    g.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  ),
+};
+---
+
+<Base
+  title="FAQ"
+  description={`Deposits, travel, trials and timings — the questions brides ask ${site.artist} before booking hair and makeup.`}
+>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+    is:inline
+  />
+
+  <section class="band head">
+    <Curve from="top-left" size={0.9} />
+    <div class="shell--narrow center">
+      <p class="eyebrow">Before you book</p>
+      <h1>Questions,<br />answered.</h1>
+      <hr class="rule rule--center" />
+      <p class="lede">
+        Everything brides usually ask. If yours is not here, just ask it.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell--narrow body">
+    {
+      faq.groups.map((group, gi) => (
+        <section class="group">
+          <h2 class="group-title">
+            <span class="group-n" aria-hidden="true">
+              {String(gi + 1).padStart(2, '0')}
+            </span>
+            {group.title}
+          </h2>
+
+          {group.items.map((item) => (
+            <details class="qa" name={`faq-${gi}`}>
+              <summary>
+                <span class="q">{item.q}</span>
+                <span class="mark" aria-hidden="true" />
+              </summary>
+              <div class="a">
+                <p>{item.a}</p>
+              </div>
+            </details>
+          ))}
+        </section>
+      ))
+    }
+
+    <div class="ask center">
+      <h2>Still wondering something?</h2>
+      <p>
+        Krista answers her own inbox, usually within {site.responseTime}.
+      </p>
+      <p class="ask-cta">
+        <a href="/book/" class="btn">Send an inquiry</a>
+        <a href={`mailto:${site.email}`} class="textlink">Or email her</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: clamp(40px, 6vw, 60px);
+  }
+
+  .body {
+    padding-bottom: var(--band);
+  }
+
+  .group {
+    margin-bottom: clamp(40px, 5vw, 60px);
+  }
+
+  .group-title {
+    font-size: clamp(21px, 2.4vw, 26px);
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .group-n {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--brown-soft);
+  }
+
+  /* <details> gives keyboard support, screen-reader semantics and
+     find-in-page for free — no JavaScript involved. */
+  .qa {
+    border-bottom: 1px solid color-mix(in srgb, var(--divider) 55%, transparent);
+  }
+
+  .qa summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  .qa summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .q {
+    font-size: 16px;
+    color: var(--brown-deep);
+    transition: opacity 0.2s ease;
+  }
+
+  .qa summary:hover .q {
+    opacity: 0.7;
+  }
+
+  .mark {
+    position: relative;
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+  }
+
+  .mark::before,
+  .mark::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto 0;
+    height: 1.5px;
+    background: var(--brown);
+    border-radius: 2px;
+    transition: transform 0.25s ease;
+  }
+
+  .mark::after {
+    transform: rotate(90deg);
+  }
+
+  .qa[open] .mark::after {
+    transform: rotate(0deg);
+  }
+
+  .a {
+    padding-bottom: 22px;
+    max-width: 62ch;
+  }
+
+  .a p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--brown-soft);
+  }
+
+  .ask {
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: clamp(36px, 5vw, 56px);
+    margin-top: clamp(20px, 3vw, 32px);
+  }
+
+  .ask h2 {
+    font-size: clamp(24px, 2.8vw, 32px);
+    margin-bottom: 10px;
+  }
+
+  .ask p {
+    font-size: 15px;
+  }
+
+  .ask-cta {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+</style>

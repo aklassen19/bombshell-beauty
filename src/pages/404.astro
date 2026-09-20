@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+---
+
+<Base title="Page not found" description="That page does not exist.">
+  <section class="band wrap">
+    <Curve from="bottom-left" size={1} />
+    <div class="shell--narrow center">
+      <p class="eyebrow">Error 404</p>
+      <h1>This page ran off<br />with the bouquet.</h1>
+      <hr class="rule rule--center" />
+      <p class="lede">
+        Whatever you were after, it is not here any more. The important pages
+        are all one tap away.
+      </p>
+      <p class="cta">
+        <a href="/" class="btn">Back to the start</a>
+        <a href="/book/" class="textlink">Check your date</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wrap {
+    position: relative;
+    overflow: hidden;
+    min-height: 62vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .cta {
+    margin-top: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+</style>

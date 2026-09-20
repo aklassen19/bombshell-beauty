@@ -1,0 +1,146 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Curve from '../components/Curve.astro';
+import site from '../content/site.json';
+import gallery from '../content/gallery.json';
+import { resolveGallery } from '../lib/photos';
+
+const photos = resolveGallery(gallery.items);
+---
+
+<Base
+  title="Gallery"
+  description={`Bridal hair and makeup by ${site.artist} — real weddings across Edmonton and central Alberta.`}
+>
+  <section class="band head">
+    <Curve from="top-right" size={0.9} />
+    <div class="shell--narrow center">
+      <p class="eyebrow">Her work</p>
+      <h1>Gallery</h1>
+      <hr class="rule rule--center" />
+      <p class="lede">
+        Real brides, real mornings, no filters doing the heavy lifting.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell body">
+    {
+      photos.length > 0 ? (
+        <ul class="grid">
+          {photos.map((p, i) => (
+            <li>
+              <Image
+                src={p.image}
+                alt={p.alt}
+                widths={[320, 560, 860]}
+                sizes="(max-width: 640px) 92vw, (max-width: 1000px) 45vw, 340px"
+                loading={i < 3 ? 'eager' : 'lazy'}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="center empty">
+          New work is on its way. In the meantime, Krista posts every wedding to{' '}
+          <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+            Instagram
+          </a>
+          .
+        </p>
+      )
+    }
+
+    <div class="more center">
+      <p class="eyebrow">More on Instagram</p>
+      <h2>She posts every wedding.</h2>
+      <p class="lede">
+        The gallery is a selection. {site.instagramHandle} is the whole story, updated
+        through the season.
+      </p>
+      <p class="more-cta">
+        <a
+          href={site.instagram}
+          class="btn btn--ghost"
+          target="_blank"
+          rel="noopener noreferrer">Follow on Instagram</a
+        >
+        <a href="/book/" class="textlink">Check your date</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: clamp(36px, 5vw, 52px);
+  }
+
+  .body {
+    padding-bottom: var(--band);
+  }
+
+  .grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: clamp(14px, 2vw, 22px);
+  }
+
+  .grid :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.4s ease;
+  }
+
+  .grid li:hover :global(img) {
+    transform: scale(1.02);
+  }
+
+  /* Give the first photo a wider slot on roomy screens so the grid has
+     a focal point instead of reading as a contact sheet. */
+  @media (min-width: 1000px) {
+    .grid li:first-child {
+      grid-column: span 2;
+    }
+
+    .grid li:first-child :global(img) {
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  .empty {
+    padding: clamp(40px, 6vw, 72px) 0;
+    color: var(--brown-soft);
+  }
+
+  .empty a {
+    color: var(--brown-deep);
+  }
+
+  .more {
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: clamp(40px, 6vw, 68px) clamp(28px, 5vw, 56px);
+    margin-top: clamp(40px, 6vw, 64px);
+  }
+
+  .more h2 {
+    margin-bottom: 14px;
+  }
+
+  .more-cta {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+</style>

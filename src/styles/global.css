@@ -1,0 +1,279 @@
+/* ───────────────────────────────────────────────────────────
+   Blonde Bombshell Beauty — brand foundations
+
+   Colours are sampled from Krista's own client contract and price
+   sheet so the site, the contract and the invoices all look like one
+   business. Do not invent new ones.
+   ─────────────────────────────────────────────────────────── */
+
+:root {
+  /* Measured from the brand documents */
+  --cream: #fffbfa;
+  --blush: #f1e4dd;
+  --brown: #835741;
+
+  /* Derived, kept in the same family */
+  --blush-deep: #e6d2c8;
+  --brown-deep: #5e3b2b;
+  --brown-soft: #8e6551;
+  --divider: #e3d2c8;
+  --ink: #3d2619;
+
+  --shadow-soft: 0 18px 48px -24px rgba(94, 59, 43, 0.35);
+  --shadow-lift: 0 26px 60px -28px rgba(94, 59, 43, 0.45);
+
+  --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Poppins', 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --measure: 68ch;
+  --gutter: clamp(20px, 5vw, 48px);
+  --shell: 1120px;
+  --radius: 14px;
+
+  /* Vertical rhythm between major page bands */
+  --band: clamp(64px, 9vw, 128px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--cream);
+  color: var(--brown);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.75;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+main {
+  flex: 1;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── Type scale ─── */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--brown-deep);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(38px, 6.5vw, 74px);
+}
+
+h2 {
+  font-size: clamp(30px, 4.4vw, 48px);
+}
+
+h3 {
+  font-size: clamp(20px, 2.4vw, 26px);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Small tracked-out label — her documents use these above every section */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+  margin-bottom: 18px;
+}
+
+.lede {
+  font-size: clamp(17px, 1.9vw, 20px);
+  line-height: 1.7;
+  max-width: 56ch;
+}
+
+.rule {
+  width: 64px;
+  height: 1px;
+  border: 0;
+  background: var(--brown);
+  opacity: 0.3;
+  margin: 26px 0;
+}
+
+.rule--center {
+  margin-inline: auto;
+}
+
+/* ─── Layout ─── */
+
+.shell {
+  width: min(var(--shell), 100% - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+/* Used on its own, not alongside .shell — so it needs its own centring. */
+.shell--narrow {
+  width: min(760px, 100% - var(--gutter) * 2);
+  margin-inline: auto;
+}
+
+.band {
+  padding-block: var(--band);
+  position: relative;
+}
+
+.band--blush {
+  background: var(--blush);
+}
+
+.center {
+  text-align: center;
+}
+
+.center .rule {
+  margin-inline: auto;
+}
+
+.center .lede {
+  margin-inline: auto;
+}
+
+/* ─── Buttons ─── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+  background: var(--brown);
+  padding: 17px 40px;
+  border-radius: 999px;
+  border: 1px solid var(--brown);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--brown-deep);
+  border-color: var(--brown-deep);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--brown);
+}
+
+.btn--ghost:hover {
+  background: var(--brown);
+  color: var(--cream);
+}
+
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: progress;
+  transform: none;
+}
+
+/* Underlined text link, used where a button would be too loud */
+.textlink {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brown);
+  text-decoration: none;
+  padding-bottom: 3px;
+  border-bottom: 1px solid currentColor;
+  transition: opacity 0.2s ease;
+}
+
+.textlink:hover {
+  opacity: 0.6;
+}
+
+/* ─── Focus: visible on every interactive thing, in brand colour ─── */
+
+:focus-visible {
+  outline: 2px solid var(--brown-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 50%;
+  translate: -50% -120%;
+  z-index: 200;
+  background: var(--brown);
+  color: var(--cream);
+  padding: 12px 24px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: translate 0.2s ease;
+}
+
+.skip-link:focus {
+  translate: -50% 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
