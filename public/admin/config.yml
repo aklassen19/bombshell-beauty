@@ -1,7 +1,7 @@
 backend:
   name: github
   # Set this to the real repo once it exists on GitHub.
-  repo: OWNER/bombshell-beauty
+  repo: aklassen19/bombshell-beauty
   branch: main
   # Points at the OAuth handler in /api, since this is not hosted on Netlify.
   base_url: https://blondebombshellbeauty.ca
