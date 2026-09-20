@@ -15,8 +15,11 @@ npm run dev
 
 ## Before it goes live
 
-See **[SETUP.md](SETUP.md)**. The urgent item is step 1 — connecting the
+See **[SETUP.md](SETUP.md)**. The urgent item is step 3 — connecting the
 booking form to Krista's inbox.
+
+There's no custom domain yet, and none is needed. The site works out its own
+web address from wherever Vercel serves it.
 
 ## Changing things
 

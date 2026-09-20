@@ -1,10 +1,10 @@
 backend:
   name: github
-  # Set this to the real repo once it exists on GitHub.
+  # The repo the CMS reads from and writes Krista's changes back to.
   repo: aklassen19/bombshell-beauty
   branch: main
   # Points at the OAuth handler in /api, since this is not hosted on Netlify.
-  base_url: https://blondebombshellbeauty.ca
+  base_url: __SITE_URL__
   auth_endpoint: api/auth
 
 # Krista uploads photos straight into the folder Astro optimises from, so
@@ -13,8 +13,8 @@ media_folder: src/assets/photos
 public_folder: /src/assets/photos
 
 publish_mode: simple
-site_url: https://blondebombshellbeauty.ca
-logo_url: https://blondebombshellbeauty.ca/apple-touch-icon.png
+site_url: __SITE_URL__
+logo_url: __SITE_URL__/apple-touch-icon.png
 
 collections:
   # ─── Prices ───
