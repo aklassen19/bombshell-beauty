@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Krista — Blonde Bombshell Beauty</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .inner { max-width: 900px; margin: 0 auto; padding: 72px 40px 80px; }
+    .page-header { margin-bottom: 60px; }
+    .eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--burgundy-light);
+      opacity: 0.6; margin-bottom: 16px;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 300; color: var(--burgundy);
+      line-height: 1.1; letter-spacing: 0.01em;
+    }
+    .page-header h1 em { font-style: italic; }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start; margin-bottom: 64px;
+    }
+    .about-image { width: 100%; border-radius: 12px; object-fit: cover; display: block; }
+    .about-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 30px); font-weight: 400;
+      color: var(--burgundy); margin-bottom: 20px; line-height: 1.3;
+    }
+    .about-content p {
+      font-size: 14px; font-weight: 300; color: var(--burgundy-light);
+      line-height: 1.9; margin-bottom: 16px;
+    }
+    .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-style: italic; font-weight: 300;
+      color: var(--burgundy); margin-top: 28px;
+    }
+    .contact-strip { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .contact-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 400; color: var(--burgundy);
+      background: rgba(107,45,45,0.07); border: 1px solid var(--divider);
+      padding: 8px 16px; border-radius: 40px; text-decoration: none;
+    }
+    .values-section { border-top: 1px solid var(--divider); padding-top: 52px; margin-bottom: 52px; }
+    .values-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.25em;
+      text-transform: uppercase; opacity: 0.5; margin-bottom: 28px;
+    }
+    .values-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .value-card {
+      background: rgba(232,201,193,0.2); border: 1px solid var(--divider);
+      border-radius: 10px; padding: 24px 20px; text-align: center;
+    }
+    .value-icon { font-size: 26px; margin-bottom: 12px; display: block; }
+    .value-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; color: var(--burgundy); margin-bottom: 8px;
+    }
+    .value-desc { font-size: 12px; font-weight: 300; color: var(--burgundy-light); line-height: 1.6; }
+    .cta-wrapper { text-align: center; padding: 48px 0 0; }
+    .cta-wrapper p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-style: italic; font-weight: 300;
+      color: var(--burgundy); margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+      .inner { padding: 40px 20px 56px; }
+      .page-header { text-align: center; }
+      .page-header h1 { font-size: clamp(32px, 7vw, 48px); text-align: center; }
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .about-content { text-align: center; }
+      .about-content p { text-align: center; }
+      .signature { text-align: center; }
+      .contact-strip { flex-direction: column; align-items: center; }
+      .values-section { text-align: center; }
+      .values-label { text-align: center; }
+      .values-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .inner { padding: 56px 24px 64px; }
+      .about-grid { gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main>
+    <div class="inner">
+      <div class="page-header">
+        <h1>Blonde Bombshell Beauty</h1>
+      </div>
+
+      <div class="about-grid">
+        <img class="about-image" src="https://framerusercontent.com/images/6HqTMkezdRBCrcz8DdQr7ZPH0.png" alt="Krista Matthews, Master Artist">
+        <div class="about-content">
+          <p>Located in Edmonton, Alberta, Blonde Bombshell Beauty is a company that specializes in bridal makeup artistry for weddings and other special occasions. Owner Krista Matthews, is a Certified Freelance Makeup Artist and Hair Stylist with over 10 years experience creating flawless makeup looks for brides-to-be in Alberta. If you want to feel confident and shine on your big day, look no further!</p>
+          <div class="contact-strip">
+            <a href="services.html" class="contact-pill">View Services</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="values-section">
+        <p class="values-label">What to expect</p>
+        <div class="values-grid">
+          <div class="value-card">
+            <p class="value-title">Bridal Beauty</p>
+          </div>
+          <div class="value-card">
+            <p class="value-title">On-Site Services</p>
+          </div>
+          <div class="value-card">
+            <p class="value-title">Luxury Packages</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-wrapper">
+        <a href="book.html" class="btn">Book Your Date →</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="components.js"></script>
+</body>
+</html>

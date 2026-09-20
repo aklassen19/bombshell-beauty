@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Pricing — Blonde Bombshell Beauty</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .inner { max-width: 720px; margin: 0 auto; padding: 72px 40px 80px; }
+    .page-header { text-align: center; margin-bottom: 64px; }
+    .year {
+      font-family: 'Cormorant Garamond', serif; font-size: 20px;
+      font-style: italic; font-weight: 300; color: var(--burgundy-light); letter-spacing: 0.1em;
+    }
+    .header-divider { width: 50px; height: 1px; background: var(--burgundy); margin: 16px auto; opacity: 0.4; }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 56px); font-weight: 300;
+      color: var(--burgundy); line-height: 1.1; letter-spacing: 0.02em;
+    }
+    .pricing-section { margin-bottom: 48px; }
+    .section-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--burgundy); opacity: 0.6; margin-bottom: 20px;
+    }
+    .pricing-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 13px 0; border-bottom: 1px solid var(--divider); gap: 8px;
+    }
+    .pricing-row:first-of-type { border-top: 1px solid var(--divider); }
+    .service-name {
+      font-size: clamp(13px, 2vw, 15px); font-weight: 300; color: var(--burgundy); flex: 1;
+    }
+    .note-tag {
+      display: inline-block; font-size: 9px; font-weight: 400; letter-spacing: 0.08em;
+      color: var(--burgundy-light); background: rgba(107,45,45,0.08);
+      padding: 2px 7px; border-radius: 20px; margin-left: 6px; vertical-align: middle;
+    }
+    .price-dots {
+      flex: 1; border-bottom: 1px dotted var(--divider);
+      margin: 0 12px; position: relative; top: -3px; min-width: 20px;
+    }
+    .service-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.5vw, 20px); font-weight: 400;
+      color: var(--burgundy); white-space: nowrap;
+    }
+    .service-price small { font-size: 12px; opacity: 0.7; }
+    .section-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--divider), transparent);
+      margin: 44px 0;
+    }
+    .bottom-note {
+      text-align: center; margin-top: 52px; padding: 28px 24px;
+      background: rgba(232,201,193,0.25); border-radius: 12px; border: 1px solid var(--divider);
+    }
+    .bottom-note p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(14px, 2vw, 17px); font-style: italic; font-weight: 300;
+      color: var(--burgundy); line-height: 1.7; margin-bottom: 8px;
+    }
+    .bottom-note p:last-child { margin-bottom: 0; }
+    .bottom-note strong { font-weight: 600; font-style: normal; }
+    .cta-wrapper { text-align: center; margin-top: 44px; }
+    @media (max-width: 768px) {
+      .inner { padding: 40px 20px 56px; }
+      .page-header h1 { font-size: clamp(32px, 7vw, 44px); }
+      .bottom-note { padding: 24px 16px; }
+    }
+    @media (max-width: 480px) {
+      .price-dots { display: none; }
+      .service-price { margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main>
+    <div class="inner">
+      <div class="page-header">
+        <p class="year">2026 Pricing</p>
+        <div class="header-divider"></div>
+        <h1>Services &<br>Pricing</h1>
+      </div>
+
+      <!-- MAKEUP -->
+      <div class="pricing-section">
+        <p class="section-label">01 — Makeup</p>
+        <div class="pricing-row">
+          <span class="service-name">Bridal makeup with lashes <span class="note-tag">most popular</span></span>
+          <span class="price-dots"></span><span class="service-price">$165</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Bridal makeup trial with lashes</span>
+          <span class="price-dots"></span><span class="service-price">$165</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Bridal makeup — no lashes</span>
+          <span class="price-dots"></span><span class="service-price">$150</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Bridal party makeup with lashes</span>
+          <span class="price-dots"></span><span class="service-price">$140 <small>/ person</small></span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Bridal party makeup — no lashes</span>
+          <span class="price-dots"></span><span class="service-price">$125 <small>/ person</small></span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Jr. makeup — up to age 16</span>
+          <span class="price-dots"></span><span class="service-price">$100</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Lashes only</span>
+          <span class="price-dots"></span><span class="service-price">$15</span>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- HAIR -->
+      <div class="pricing-section">
+        <p class="section-label">02 — Hair</p>
+        <div class="pricing-row">
+          <span class="service-name">Bridal hair styling</span>
+          <span class="price-dots"></span><span class="service-price">$160</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Bridal hair styling trial</span>
+          <span class="price-dots"></span><span class="service-price">$160</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Bridal party hair styling</span>
+          <span class="price-dots"></span><span class="service-price">$140 <small>/ person</small></span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Jr. hair — up to age 16</span>
+          <span class="price-dots"></span><span class="service-price">$100</span>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- OTHERS -->
+      <div class="pricing-section">
+        <p class="section-label">03 — Additional Fees</p>
+        <div class="pricing-row">
+          <span class="service-name">Early morning fee — 7am or before</span>
+          <span class="price-dots"></span><span class="service-price">$125</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Touch-ups</span>
+          <span class="price-dots"></span><span class="service-price">$100 <small>/ hr</small></span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Second artist</span>
+          <span class="price-dots"></span><span class="service-price">$250</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Travel — within Edmonton</span>
+          <span class="price-dots"></span><span class="service-price">$50 flat</span>
+        </div>
+        <div class="pricing-row">
+          <span class="service-name">Travel — outside Edmonton</span>
+          <span class="price-dots"></span><span class="service-price">$0.60 <small>/ km</small></span>
+        </div>
+      </div>
+
+      <div class="bottom-note">
+        <p>A <strong>non-refundable deposit of 50%</strong> is required to secure your date.</p>
+        <p>Full balance is due <strong>7 days before your wedding day.</strong></p>
+        <p style="margin-top:10px; font-size:14px;">Payment by cash or e-transfer to <strong>BlondeBBeauty@gmail.com</strong></p>
+      </div>
+
+      <div class="cta-wrapper">
+        <a href="book.html" class="btn">Book Your Date →</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="components.js"></script>
+</body>
+</html>

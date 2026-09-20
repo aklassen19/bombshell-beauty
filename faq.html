@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Blonde Bombshell Beauty</title>
+  <link rel="stylesheet" href="css/global.css">
+  <style>
+    .inner { max-width: 720px; margin: 0 auto; padding: 72px 40px 80px; }
+    .page-header { text-align: center; margin-bottom: 60px; }
+    .eyebrow {
+      font-family: 'Cormorant Garamond', serif; font-size: 18px;
+      font-style: italic; font-weight: 300; color: var(--burgundy-light); margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 6vw, 56px); font-weight: 300;
+      color: var(--burgundy); line-height: 1.1; margin-bottom: 16px;
+    }
+    .header-divider { width: 50px; height: 1px; background: var(--burgundy); margin: 0 auto 16px; opacity: 0.3; }
+    .page-header p { font-size: 14px; font-weight: 300; color: var(--burgundy-light); line-height: 1.7; }
+    .faq-category { margin-bottom: 48px; }
+    .category-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.25em;
+      text-transform: uppercase; opacity: 0.5; margin-bottom: 16px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--divider);
+    }
+    .faq-item { border-bottom: 1px solid var(--divider); padding: 20px 0; cursor: pointer; }
+    .faq-item:first-of-type { border-top: 1px solid var(--divider); }
+    .faq-question { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq-q-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 2.5vw, 19px); font-weight: 400;
+      color: var(--burgundy); line-height: 1.3;
+    }
+    .faq-icon {
+      font-size: 20px; color: var(--burgundy); opacity: 0.5;
+      transition: transform 0.3s ease; flex-shrink: 0; user-select: none;
+    }
+    .faq-answer { display: none; padding-top: 14px; }
+    .faq-answer p {
+      font-size: 14px; font-weight: 300; color: var(--burgundy-light); line-height: 1.8;
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); opacity: 1; }
+    .cta-wrapper {
+      text-align: center; margin-top: 60px; padding: 40px;
+      background: rgba(232,201,193,0.2); border-radius: 12px; border: 1px solid var(--divider);
+    }
+    .cta-wrapper p {
+      font-family: 'Cormorant Garamond', serif; font-size: 20px;
+      font-style: italic; font-weight: 300; color: var(--burgundy);
+      margin-bottom: 20px; line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .inner { padding: 40px 20px 56px; }
+      .page-header h1 { font-size: clamp(32px, 7vw, 44px); }
+      .cta-wrapper { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main>
+    <div class="inner">
+      <div class="page-header">
+        <p class="eyebrow">Got questions?</p>
+        <h1>Frequently Asked<br>Questions</h1>
+        <div class="header-divider"></div>
+        <p>Everything you need to know before booking.</p>
+      </div>
+
+      <div class="faq-category">
+        <p class="category-label">01 — Booking & Payment</p>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">How do I secure my date?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>A non-refundable deposit of 50% of your total services is required to lock in your date. Your date is only held for one week after your contract is sent.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">How do I pay?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>Payment is accepted by cash or e-transfer to BlondeBBeauty@gmail.com. No personal cheques. All amounts must be in Canadian dollars.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">Can I make changes after booking?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>Small changes like adding or removing a service can be made up to 1 month before your event. No less than half the booked services can be removed after your deposit is paid.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-category">
+        <p class="category-label">02 — Services & Travel</p>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">Do you travel to us?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>Yes! All services are on-location. Travel within Edmonton is a $50 flat fee. Outside Edmonton is $0.60/km each way.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">What's included in the trial?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>Your trial is the same price as your wedding day service and is highly recommended so we can perfect your look ahead of the big day.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">What if I'm running late?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>If your party is 30 or more minutes late to the appointment, a $95 late fee applies.</p></div>
+        </div>
+      </div>
+
+      <div class="faq-category">
+        <p class="category-label">03 — Other Questions</p>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">Can Krista use photos from my wedding day?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>With your permission, yes! Krista loves featuring stunning looks on social media. You'll be asked when you sign your contract.</p></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="faq-q-text">What if Krista can't make it?</span><span class="faq-icon">+</span></div>
+          <div class="faq-answer"><p>In the rare event Krista is unable to attend due to illness or emergency, she will seek a replacement artist and give you as much notice as possible. If no replacement is found, all money paid will be fully refunded.</p></div>
+        </div>
+      </div>
+
+      <div class="cta-wrapper">
+        <p>Still have questions? Krista is happy to help.</p>
+        <a href="book.html" class="btn">Send My Inquiry →</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="components.js"></script>
+  <script>
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        item.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
