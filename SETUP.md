@@ -2,6 +2,12 @@
 
 Do these in order — each one makes the next testable.
 
+**Where this stands (20 September 2026):** steps 1, 2 and 4b–4c are **done**.
+What is left is step 3 (the booking form's inbox) and step 4a (Krista's own
+GitHub account, then her collaborator invite). Nobody has completed a real
+`/admin/` sign-in yet — the redirect to GitHub is verified working, the token
+exchange that follows it is untested.
+
 There is **no custom domain yet**, and nothing here needs one. The site runs on
 its `.vercel.app` address and works out its own web address automatically, so
 canonical links, the sitemap, the share card and the CMS login all stay correct
@@ -9,9 +15,9 @@ without anyone editing anything.
 
 ---
 
-## 1. Connect Vercel to GitHub
+## 1. Connect Vercel to GitHub — ✅ done 20 Sep 2026
 
-The Vercel project already exists. It just isn't watching the code yet.
+Deployments now come from `main`. Kept here for when it has to be redone.
 
 1. vercel.com → project **bombshell-beauty**
 2. **Settings** → **Git** → **Connect Git Repository**
@@ -27,9 +33,10 @@ change saves but the site never rebuilds, and it looks broken to her.
 
 ---
 
-## 2. Turn off the login wall
+## 2. Turn off the login wall — ✅ done 20 Sep 2026
 
-Vercel puts new projects behind a Vercel sign-in by default. Until this is off,
+`bombshell-beauty.vercel.app` is public. Vercel puts new projects behind a
+Vercel sign-in by default. Until this is off,
 anyone you send the link to hits a login page instead of the website.
 
 **Settings** → **Deployment Protection** → set **Vercel Authentication** to
@@ -64,7 +71,11 @@ remember to check.
 5. **Redeploy.** Anything starting `PUBLIC_` is baked in when the site is
    built, so it needs a rebuild to take effect.
 
-Free for 250 submissions a month.
+Free for 250 submissions a month. That free tier is email delivery only:
+**the automatic "got it" reply to the bride is a paid feature** (Pro, about
+US$12/month billed yearly, checked 20 Sep 2026). The alternative is to send
+that reply from the site itself through a free email service — no monthly cost,
+half a day of work, one more moving part. See NEXT.md, item 3.
 
 ### Or Formspree
 
@@ -93,26 +104,47 @@ edit the FAQ and paste in reviews. No code, no asking you.
 
 **Optional and fiddliest. The site is fine without it.**
 
-### 4a. She needs a GitHub account
+### 4a. She needs a GitHub account — ⬜ still owed
 
-Free, at github.com. Then invite her: repo → **Settings** → **Collaborators**
+As of 20 Sep 2026 Krista has not made one. Free, at github.com. Then invite her: repo → **Settings** → **Collaborators**
 → **Add people**.
 
 This is the part that stalls. It's an unfamiliar signup for a reason she won't
 find obvious. Worth doing sitting beside her rather than over text.
 
-### 4b. Create a GitHub OAuth App
+### 4b. Create a GitHub OAuth App — ✅ done 20 Sep 2026
+
+App registered against `https://bombshell-beauty.vercel.app`. Redo this only if
+the address changes (see "When she gets a domain" below).
 
 GitHub → your **Settings** → **Developer settings** (bottom of the sidebar) →
 **OAuth Apps** → **New OAuth App**:
 
 - **Homepage URL:** the `.vercel.app` address
-- **Authorization callback URL:** that address + `/api/callback`
+- **Redirect URI:** that address + `/api/callback`
+
+Three things GitHub's current form does that the older instructions did not:
+
+- There is no single "Authorization callback URL" field any more. It is a
+  **Redirect URIs** list with an **Add redirect URI** button, up to ten. Same
+  thing. Add a second entry if `/admin/` will also be opened on the longer
+  `bombshell-beauty-aklassen19s-projects.vercel.app` address.
+- **Untick "Expire user access tokens".** It is ticked by default, and
+  `api/callback.js` does no refresh-token handling — leaving it on signs Krista
+  out roughly every eight hours, mid-edit, with an unhelpful error.
+- Leave **Allow wildcard matching** and **Enable Device Flow** off.
 
 Register, then generate a client secret. Copy both values — the secret is only
 shown once.
 
-### 4c. Add them to Vercel
+**None of this exists in the GitHub mobile app.** Developer settings, and repo
+→ Settings → Collaborators, are website-only. On a phone, type
+`github.com/settings/developers` into the browser's address bar — tapping a
+link hands off to the app.
+
+### 4c. Add them to Vercel — ✅ done 20 Sep 2026
+
+Both are set on Production, Preview and Development.
 
 | Name | Value |
 |---|---|
@@ -120,9 +152,20 @@ shown once.
 | `GITHUB_OAUTH_SECRET` | the client secret |
 
 **No `PUBLIC_` prefix on these.** That prefix ships a value to every visitor's
-browser, and the secret must stay server-side.
+browser, and the secret must stay server-side. The secret is stored as
+**sensitive**, so Vercel will not display it again to anyone — if it is ever
+needed, regenerate it on GitHub rather than trying to read it back.
 
 Redeploy, then visit `/admin/` and sign in.
+
+**Test:** `curl -i "https://bombshell-beauty.vercel.app/api/auth?provider=github"`
+should answer `302` with a `location` pointing at github.com. A `500` saying
+`GITHUB_OAUTH_ID is not set` means the variables were saved but nothing was
+rebuilt since — environment variables only reach the site on the next build.
+
+That test covers the first half of the login only. The second half, where
+GitHub's code is swapped for a token, can only be checked by signing in through
+a browser. **Do that once yourself before Krista ever sees the link.**
 
 ### Why this is needed at all
 
@@ -170,7 +213,8 @@ variable:
 | `SITE_URL` | `https://herdomain.ca` |
 
 Redeploy. That's the whole job — the sitemap, canonical links, share card and
-CMS login all follow it. Then update the OAuth App's two URLs from step 4b.
+CMS login all follow it. Then update the OAuth App's **Homepage URL** and
+**Redirect URI** from step 4b to the new address, or the CMS login breaks.
 
 ---
 
