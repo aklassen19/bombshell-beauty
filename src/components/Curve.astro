@@ -14,9 +14,22 @@ interface Props {
   color?: string;
   /** Diameter as a share of the container's width. */
   size?: number;
+  /**
+   * Tuck a small circle into the corner instead of sweeping across. For
+   * page heads whose text is centred: a sweep sized to the page width puts
+   * its edge through the middle of the heading at some screen width, and
+   * the band's bottom edge slices it flat. Sized in pixels, so it stays
+   * clear of the centre column from phone to desktop.
+   */
+  corner?: boolean;
 }
 
-const { from = 'top-left', color = 'var(--blush)', size = 1.35 } = Astro.props;
+const {
+  from = 'top-left',
+  color = 'var(--blush)',
+  size = 1.35,
+  corner = false,
+} = Astro.props;
 
 const anchors = {
   'top-left': { top: '-45%', left: '-30%' },
@@ -25,14 +38,21 @@ const anchors = {
   'bottom-right': { bottom: '-45%', right: '-30%' },
 } as const;
 
-const pos = anchors[from];
+const cornerAnchors = {
+  'top-left': { top: 'calc(var(--w) * -0.55)', left: 'calc(var(--w) * -0.33)' },
+  'top-right': { top: 'calc(var(--w) * -0.55)', right: 'calc(var(--w) * -0.33)' },
+  'bottom-left': { bottom: 'calc(var(--w) * -0.55)', left: 'calc(var(--w) * -0.33)' },
+  'bottom-right': { bottom: 'calc(var(--w) * -0.55)', right: 'calc(var(--w) * -0.33)' },
+} as const;
+
+const pos = corner ? cornerAnchors[from] : anchors[from];
 const style = Object.entries(pos)
   .map(([k, v]) => `${k}:${v}`)
   .join(';');
 ---
 
 <div
-  class="curve"
+  class:list={['curve', { 'curve--corner': corner }]}
   aria-hidden="true"
   style={`${style};--curve-color:${color};--curve-size:${size}`}
 >
@@ -47,6 +67,11 @@ const style = Object.entries(pos)
     background: var(--curve-color);
     z-index: 0;
     pointer-events: none;
+  }
+
+  .curve--corner {
+    --w: clamp(180px, 38vw, 520px);
+    width: var(--w);
   }
 
   /* Anything inside a band sits above the sweep. */

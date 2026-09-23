@@ -85,5 +85,35 @@ const schema = {
       <slot />
     </main>
     <Footer />
+
+    <script>
+      /**
+       * Photos marked data-reveal fade up as they scroll into view.
+       *
+       * Only things that start below the fold are hidden, and only by this
+       * script, so nothing on screen at load ever blinks out and back — and
+       * if the script never runs, every photo is simply there.
+       */
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+      if (!still && 'IntersectionObserver' in window && els.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.remove('reveal-pending');
+              io.unobserve(e.target);
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        for (const el of els) {
+          if (el.getBoundingClientRect().top < window.innerHeight) continue;
+          el.classList.add('reveal-pending');
+          io.observe(el);
+        }
+      }
+    </script>
   </body>
 </html>

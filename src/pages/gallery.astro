@@ -14,7 +14,7 @@ const photos = resolveGallery(gallery.items);
   description={`Bridal hair and makeup by ${site.artist} — real weddings across Edmonton and central Alberta.`}
 >
   <section class="band head">
-    <Curve from="top-right" size={0.9} />
+    <Curve from="top-right" corner />
     <div class="shell--narrow center">
       <p class="eyebrow">Her work</p>
       <h1>Gallery</h1>
@@ -30,7 +30,7 @@ const photos = resolveGallery(gallery.items);
       photos.length > 0 ? (
         <ul class="grid">
           {photos.map((p, i) => (
-            <li>
+            <li data-reveal style={`transition-delay:${(i % 3) * 90}ms`}>
               <Image
                 src={p.image}
                 alt={p.alt}
