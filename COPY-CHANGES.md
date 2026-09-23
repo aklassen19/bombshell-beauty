@@ -132,11 +132,3 @@ claim*). If she says the original is true, it can go back word for word.
 
 - **Was:** "name": "Early morning fee, 7am or earlier"
 - **Now:** "name": "Early morning fee, if Krista leaves home by 7am"
-## 19. `src/pages/index.astro` — the main headline
-
-*Her own words from the old site, but any wedding business could say them.
-Kept her words and added what makes her different. Added after the first
-batch, in its own commit.*
-
-- **Was:** Elegant. Romantic.<br />Beautiful.
-- **Now:** Elegant, romantic,<br />and completely you.
