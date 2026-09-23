@@ -9,7 +9,11 @@ import gallery from '../content/gallery.json';
 import { resolveGallery } from '../lib/photos';
 import hero from '../assets/photos/bridal-makeup-application.jpg';
 
-const photos = resolveGallery(gallery.items).slice(0, 6);
+// The hero photo is already at the top of the page; showing it again a
+// scroll later makes the portfolio look thinner than it is.
+const photos = resolveGallery(gallery.items)
+  .filter((p) => p.image.src !== hero.src)
+  .slice(0, 6);
 
 // Below three, the section is the hero photo again plus whatever else is
 // in the gallery — not a portfolio. It appears on its own once there are
