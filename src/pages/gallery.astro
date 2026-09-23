@@ -104,13 +104,15 @@ const photos = resolveGallery(gallery.items);
   }
 
   /* Give the first photo a wider slot on roomy screens so the grid has
-     a focal point instead of reading as a contact sheet. */
+     a focal point instead of reading as a contact sheet. Only from four
+     photos up: with fewer there is no contact sheet to break up, and the
+     3:2 crop cuts the head off a portrait-shaped photo. */
   @media (min-width: 1000px) {
-    .grid li:first-child {
+    .grid li:first-child:nth-last-child(n + 4) {
       grid-column: span 2;
     }
 
-    .grid li:first-child :global(img) {
+    .grid li:first-child:nth-last-child(n + 4) :global(img) {
       aspect-ratio: 3 / 2;
     }
   }

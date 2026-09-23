@@ -62,10 +62,13 @@ const pickable = [
       <input type="hidden" name="_next" value="/thank-you/" />
       <input type="hidden" name="redirect" value="/thank-you/" />
 
-      <!-- Spam trap. Real people never see it; bots fill it in. -->
+      <!-- Spam traps. Real people never see them; bots fill them in. Each
+           service only checks its own field name — Web3Forms rejects a
+           ticked `botcheck`, Formspree a filled `_gotcha`. -->
       <div class="trap" aria-hidden="true">
         <label for="company">Company</label>
         <input type="text" id="company" name="_gotcha" tabindex="-1" autocomplete="off" />
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" />
       </div>
 
       <fieldset class="block">
@@ -274,6 +277,29 @@ const pickable = [
       errorBox.hidden = false;
     };
 
+    /**
+     * "Inquiry — Sarah Jones, 14 June 2027", so Krista can scan and search
+     * her inbox by bride and date instead of opening every one.
+     */
+    const subjectFor = (data: FormData) => {
+      const name = String(data.get('name') ?? '').trim();
+      const raw = String(data.get('wedding_date') ?? '');
+      // Built from the parts rather than `new Date(raw)`, which reads a bare
+      // date as UTC midnight and shows the day before in Edmonton.
+      const [y, m, d] = raw.split('-').map(Number);
+      const when =
+        y && m && d
+          ? new Date(y, m - 1, d).toLocaleDateString('en-CA', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })
+          : '';
+      return ['Inquiry', [name, when].filter(Boolean).join(', ')]
+        .filter(Boolean)
+        .join(' — ');
+    };
+
     /** Fallback when no endpoint is configured: hand it to their mail app. */
     const composeMailto = (data: FormData) => {
       const label: Record<string, string> = {
@@ -297,7 +323,7 @@ const pickable = [
       const picked = data.getAll('services').filter(Boolean);
       if (picked.length) lines.push(`Services: ${picked.join(', ')}`);
 
-      const subject = encodeURIComponent('Wedding inquiry');
+      const subject = encodeURIComponent(subjectFor(data));
       const body = encodeURIComponent(lines.join('\n'));
       window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     };
@@ -309,6 +335,9 @@ const pickable = [
       if (!form.reportValidity()) return;
 
       const data = new FormData(form);
+      const subject = subjectFor(data);
+      data.set('subject', subject);
+      data.set('_subject', subject);
 
       if (!endpoint) {
         composeMailto(data);

@@ -11,6 +11,11 @@ import hero from '../assets/photos/bridal-makeup-application.jpg';
 
 const photos = resolveGallery(gallery.items).slice(0, 6);
 
+// Below three, the section is the hero photo again plus whatever else is
+// in the gallery — not a portfolio. It appears on its own once there are
+// enough real weddings to fill it, the same way the reviews do.
+const showWork = photos.length >= 3;
+
 const offerings = [
   {
     title: 'Bridal makeup',
@@ -117,7 +122,7 @@ const steps = [
 
   <!-- ─── Gallery preview ─── -->
   {
-    photos.length > 0 && (
+    showWork && (
       <section class="band band--blush">
         <div class="shell">
           <div class="center">
