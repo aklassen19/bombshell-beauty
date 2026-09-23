@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "note": "Every service comes to you, wherever you are getting ready.",
+  "note": "All services are on location. Travel is quoted with your package.",
   "groups": [
     {
       "title": "Makeup",
@@ -42,7 +42,7 @@
     {
       "title": "Additional",
       "items": [
-        { "name": "Early morning fee, if Krista leaves home by 7am", "price": "$125" },
+        { "name": "Early morning fee, 7am or earlier", "price": "$125" },
         { "name": "Touch-ups", "price": "$100", "unit": "per hour" },
         { "name": "Second artist", "price": "$250" },
         { "name": "Travel within Edmonton", "price": "$50", "unit": "flat" },
