@@ -93,7 +93,7 @@ const isCurrent = (href: string) => here === href.replace(/\/+$/, '');
   .inner {
     width: min(var(--shell), 100% - var(--gutter) * 2);
     margin-inline: auto;
-    height: 86px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -105,8 +105,11 @@ const isCurrent = (href: string) => here === href.replace(/\/+$/, '');
     flex-shrink: 0;
   }
 
+  /* The mark has a lot of air inside it — "BEAUTY" is a fraction of its
+     height — so it needs this much size before the name reads. The file
+     is 445px wide, which stays sharp on a retina screen up to here. */
   .logo :global(img) {
-    height: 54px;
+    height: 76px;
     width: auto;
   }
 
@@ -183,11 +186,11 @@ const isCurrent = (href: string) => here === href.replace(/\/+$/, '');
 
   @media (max-width: 860px) {
     .inner {
-      height: 72px;
+      height: 78px;
     }
 
     .logo :global(img) {
-      height: 44px;
+      height: 58px;
     }
 
     .toggle {

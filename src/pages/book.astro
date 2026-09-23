@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Curve from '../components/Curve.astro';
+import NextSteps from '../components/NextSteps.astro';
 import site from '../content/site.json';
 import services from '../content/services.json';
 
@@ -20,6 +21,10 @@ import services from '../content/services.json';
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
 const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY ?? '';
 const hasEndpoint = Boolean(endpoint);
+
+// The services send no-script submissions here. A bare path is not enough:
+// it is resolved against *their* domain, not this one.
+const thankYou = new URL('/thank-you/', Astro.site).href;
 
 const pickable = [
   ...services.groups[0].items.map((i) => i.name),
@@ -59,8 +64,8 @@ const pickable = [
       <input type="hidden" name="_subject" value="New wedding inquiry" />
       <input type="hidden" name="from_name" value="Blonde Bombshell Beauty website" />
       <!-- Where the service sends people whose browser blocked the script. -->
-      <input type="hidden" name="_next" value="/thank-you/" />
-      <input type="hidden" name="redirect" value="/thank-you/" />
+      <input type="hidden" name="_next" value={thankYou} />
+      <input type="hidden" name="redirect" value={thankYou} />
 
       <!-- Spam traps. Real people never see them; bots fill them in. Each
            service only checks its own field name — Web3Forms rejects a
@@ -237,12 +242,17 @@ const pickable = [
     </form>
 
     <div class="done" id="done" hidden tabindex="-1">
-      <h2>That's on its way.</h2>
-      <p>
-        Krista will be in touch within {site.responseTime}. If it is urgent, or
-        your date is close, email her directly at <a
+      <p class="eyebrow">Received</p>
+      <h2 id="done-title">That's on its way.</h2>
+      <NextSteps />
+      <p class="done-note">
+        If your date is close or something is urgent, email her directly at <a
           href={`mailto:${site.email}`}>{site.email}</a
         >.
+      </p>
+      <p class="done-cta">
+        <a href="/gallery/" class="btn btn--ghost">See her work</a>
+        <a href="/faq/" class="textlink">Read the FAQ</a>
       </p>
     </div>
 
@@ -268,9 +278,18 @@ const pickable = [
     const endpoint = form.dataset.endpoint ?? '';
     const email = form.dataset.email ?? '';
 
-    // The date picker should not offer a wedding in the past.
+    // The date picker should not offer a wedding in the past. Today is
+    // worked out on the bride's own clock: toISOString() is UTC, which in
+    // Edmonton rolls over to tomorrow at 5 or 6pm and blocks today.
     const date = form.querySelector<HTMLInputElement>('#wedding_date');
-    if (date) date.min = new Date().toISOString().slice(0, 10);
+    if (date) {
+      const now = new Date();
+      date.min = [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, '0'),
+        String(now.getDate()).padStart(2, '0'),
+      ].join('-');
+    }
 
     const showError = (msg: string) => {
       errorBox.textContent = msg;
@@ -358,6 +377,11 @@ const pickable = [
           headers: { Accept: 'application/json' },
         });
         if (!res.ok) throw new Error(String(res.status));
+        // "That's on its way, Sarah." — the first name only, and only if
+        // there is one, so the heading never reads oddly.
+        const first = String(data.get('name') ?? '').trim().split(/\s+/)[0];
+        const title = document.getElementById('done-title');
+        if (first && title) title.textContent = `That's on its way, ${first}.`;
         form.hidden = true;
         done.hidden = false;
         done.focus();
@@ -661,18 +685,25 @@ const pickable = [
     padding: clamp(48px, 7vw, 76px) clamp(28px, 5vw, 56px);
   }
 
-  .done h2 {
-    margin-bottom: 14px;
+  .done-note {
+    font-size: 14px;
+    color: var(--brown-soft);
+    max-width: 44ch;
+    margin: 28px auto 0;
+    line-height: 1.7;
   }
 
-  .done p {
-    font-size: 16px;
-    max-width: 48ch;
-    margin-inline: auto;
-  }
-
-  .done a {
+  .done-note a {
     color: var(--brown-deep);
+  }
+
+  .done-cta {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    flex-wrap: wrap;
   }
 
   .devnote {

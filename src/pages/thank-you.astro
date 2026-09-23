@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Curve from '../components/Curve.astro';
+import NextSteps from '../components/NextSteps.astro';
 import site from '../content/site.json';
 ---
 
@@ -14,9 +15,9 @@ import site from '../content/site.json';
       <p class="eyebrow">Received</p>
       <h1>That's on its way.</h1>
       <hr class="rule rule--center" />
-      <p class="lede">
-        Krista will be in touch within {site.responseTime}. If your date is
-        close, or something is urgent, email her directly at{' '}
+      <NextSteps />
+      <p class="note">
+        If your date is close or something is urgent, email her directly at{' '}
         <a href={`mailto:${site.email}`}>{site.email}</a>.
       </p>
       <p class="cta">
@@ -36,7 +37,15 @@ import site from '../content/site.json';
     align-items: center;
   }
 
-  .lede a {
+  .note {
+    font-size: 14px;
+    color: var(--brown-soft);
+    max-width: 44ch;
+    margin: 28px auto 0;
+    line-height: 1.7;
+  }
+
+  .note a {
     color: var(--brown-deep);
   }
 

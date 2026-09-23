@@ -1,0 +1,48 @@
+---
+import site from '../content/site.json';
+
+/**
+ * What happens after an inquiry is sent. Shown both in the form's own
+ * success panel and on /thank-you/ (where people land if their browser
+ * blocked the form script), so the two can never tell a bride different
+ * things.
+ */
+const steps = [
+  `Krista replies within ${site.responseTime} with a quote and a contract for your day.`,
+  'Your date is held for one week from the day the contract is sent.',
+  `Sign it with a ${site.depositPercent}% deposit and the date is yours.`,
+];
+---
+
+<ol class="next">
+  {steps.map((s) => <li>{s}</li>)}
+</ol>
+
+<style>
+  .next {
+    list-style: none;
+    counter-reset: next;
+    display: grid;
+    gap: 14px;
+    max-width: 42ch;
+    margin: 30px auto 0;
+    text-align: left;
+  }
+
+  .next li {
+    counter-increment: next;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: baseline;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .next li::before {
+    content: counter(next, decimal-leading-zero);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--brown-soft);
+  }
+</style>
